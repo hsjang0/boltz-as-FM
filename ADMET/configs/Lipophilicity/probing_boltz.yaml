@@ -1,0 +1,10 @@
+dataset_name: Lipophilicity
+task: regression
+metric: mae
+log_y: false
+test_seeds: 1,2,3,4,5
+data_dir: datasets/boltz_rep
+lr: 0.0001
+hidden: 512
+layers: 2
+epochs: 200

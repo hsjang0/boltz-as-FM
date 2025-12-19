@@ -1,0 +1,10 @@
+dataset_name: Caco2
+task: regression
+metric: mae
+log_y: false
+test_seeds: 1,2,3,4,5
+data_dir: datasets/boltz_rep_w_mini
+lr: 0.0003
+hidden: 2048
+layers: 1
+epochs: 25

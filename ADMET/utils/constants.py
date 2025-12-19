@@ -1,0 +1,32 @@
+DEFAULT_TRAINING_PARAMS = {
+    "batch_size": 32,
+    "patience": 25,
+    "warm_up": 5,
+    "dropout": 0.0,
+    "weight_decay": 1e-5,
+}
+
+ALLOWED_DATASET_NAMES = {
+    "Ames",
+    "BBB",
+    "Bioavailability",
+    "CYP2C9_Substrate_CarbonMangels",
+    "CYP2C9_Veith",
+    "CYP2D6_Substrate_CarbonMangels",
+    "CYP2D6_Veith",
+    "CYP3A4_Substrate_CarbonMangels",
+    "CYP3A4_Veith",
+    "Caco2",
+    "Clearance_Hepatocyte",
+    "Clearance_Microsome",
+    "DILI",
+    "HIA",
+    "Half",
+    "LD50",
+    "Lipophilicity",
+    "PPBR",
+    "Pgp",
+    "Solubility",
+    "VDss",
+    "hERG",
+}

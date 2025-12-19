@@ -1,0 +1,10 @@
+dataset_name: hERG
+task: classification
+metric: auroc
+log_y: false
+test_seeds: 1,2,3,4,5
+data_dir: datasets/boltz_rep
+lr: 0.0003
+hidden: 1024
+layers: 3
+epochs: 200
