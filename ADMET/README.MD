@@ -21,4 +21,4 @@ Results are stored under `results/<dataset_name>/`.
 ## Data
 - We store datasets under `datasets/boltz_rep/<dataset_name>_{train,test}.npz`.
 - Pre-extracted representations are stored as `.npz` like `Ames_train.npz` and `Ames_test.npz`, each containing `x` (features) and `y` (labels).
-- To rebuild representation datasets, follow `construct_dataset/README.md`.
+- To rebuild representation datasets, you can follow `construct_dataset/README.md`.

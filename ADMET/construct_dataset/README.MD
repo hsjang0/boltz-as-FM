@@ -8,6 +8,6 @@ Our code includes a modified version of Boltz2 located in `../../_env/boltz_for_
 - Install boltz_for_ADMET for GPU support: `cd ../../_env/boltz_for_ADMET && pip install -e .[cuda]` (already installed inside the provided Apptainer image).
 
 ## Steps
-1. Create embeddings config for Boltz: `python construct_boltz_yaml.py --save_dir <directory_name>` (`<directory_name>` is where embeddings will be written).
-2. Produce Boltz embeddings: `./get_emb.sh <directory_name> <num_gpus>`.
-3. Pool embeddings into the dataset: `python pooling_dataset.py --output_dir ../datasets/boltz_rep --emb_dir <directory_name>`.
+1. Create configs for Boltz: `python construct_boltz_yaml.py --save_dir <directory_name>` (`<directory_name>` is where embeddings will be written).
+2. Produce Boltz representations: `./get_emb.sh <directory_name> <num_gpus>`.
+3. Pool representations and create datasets: `python pooling_dataset.py --output_dir ../datasets/boltz_rep --emb_dir <directory_name>`.
