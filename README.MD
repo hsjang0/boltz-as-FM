@@ -20,15 +20,15 @@
 
 ## Repository Layout
 
-The code is currently being organized.
+*The code is currently being organized.*
 
 - `ADMET/`: TDC ADMET property prediction with lightweight MLP heads on frozen Boltz2 representations.
-- `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations.
-- `MOLOPT/`: Structure-guided ligand discovery (in-progress).
+- `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations **(in-progress)**.
+- `MOLOPT/`: Structure-guided ligand discovery **(in-progress)**.
 
 ## Environment
 
-We provide an Apptainer image in `./boltz_as_FM.sif` and a Conda environment in `_env/.`
+We provide an Apptainer image in `https://huggingface.co/datasets/hsjang1205/Boltz_as_FM_resource/blob/main/Boltz_as_FM.sif` and a Conda environment in `_env/.`
 
 ## Boltz2 Modification 
 
