@@ -13,8 +13,8 @@ from tdc.single_pred import ADME, Tox
 
 import sys
 from utils import (
+    smiles_to_edge_index,
     pool_embedding, 
-    pool_embedding_topk_norm
 )
 
 os.environ.setdefault("OMP_NUM_THREADS", "8")
@@ -85,6 +85,7 @@ def build_df(data, mode, dataset_name, emb_dir):
         smiles_string = get_smiles_from_yaml(yaml_path)
         embedding_path = emb_dir / f"boltz_results_{dataset_name}_yaml_files/predictions/{mode}_{file_idx}/embeddings_{mode}_{file_idx}.npz"
         embedding = np.load(embedding_path)
+        edge_index, _ = smiles_to_edge_index(smiles_string)
         pooled = pool_embedding_all_std(embedding, edge_index)
         rows.append((pooled, (value, i)))
 

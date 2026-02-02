@@ -53,15 +53,17 @@ def main():
     config.setdefault("results_dir", "results")
 
 
-    if config.dataset_name is None:
+    if config["dataset_name"] is None:
         raise SystemExit("dataset_name must be set via config.")
-    if config.dataset_name not in ALLOWED_DATASET_NAMES:
+    if config["dataset_name"] not in ALLOWED_DATASET_NAMES:
         allowed = ", ".join(sorted(ALLOWED_DATASET_NAMES))
-        raise SystemExit(f"dataset_name '{config.dataset_name}' is invalid. Choose from: {allowed}.")
+        raise SystemExit(f"dataset_name '{config['dataset_name']}' is invalid. Choose from: {allowed}.")
 
 
-    X_train, y_train, X_test, y_test = load_dataset(config.dataset_name, config.log_y, config.task, config.data_dir)
-    seeds = [int(s) for s in config.test_seeds.split(",") if s.strip()]
+    X_train, y_train, X_test, y_test = load_dataset(
+        config["dataset_name"], config["log_y"], config["task"], config["data_dir"]
+    )
+    seeds = [int(s) for s in config["test_seeds"].split(",") if s.strip()]
     all_test_summaries: List[Dict[str, float]] = []
     last_seed_fold_best_vals: List[float] = []
 
@@ -75,7 +77,7 @@ def main():
             X_tr, y_tr = X_train[train_idx], y_train[train_idx]
             X_va, y_va = X_train[val_idx], y_train[val_idx]
             model, x_scaler, y_scaler, fold_best_val = train_with_selection_return_model_and_scalers(
-                X_tr, y_tr, X_va, y_va, config, device, seed
+                X_tr, y_tr, X_va, y_va, config, device, seed, fold_idx
             )
             multi_runs.append((model, x_scaler, y_scaler))
             fold_best_vals.append(fold_best_val)
@@ -88,7 +90,7 @@ def main():
     metrics_mean_std = aggregate_metrics(all_test_summaries)
     print("Validation metrics:", metrics_mean_std)
 
-    out_dir = os.path.join(config.results_dir, config.dataset_name)
+    out_dir = os.path.join(config["results_dir"], config["dataset_name"])
     os.makedirs(out_dir, exist_ok=True)
     out_file = os.path.join(out_dir, hp_filename(config))
     

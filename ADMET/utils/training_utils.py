@@ -8,12 +8,14 @@ from scipy.stats import spearmanr
 from sklearn.metrics import average_precision_score, mean_absolute_error, roc_auc_score
 from sklearn.preprocessing import StandardScaler
 
+from tqdm.auto import tqdm
+
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 
-from data_utils import IdentityScaler
-from modeling import MLP, make_scheduler
+from .data_utils import IdentityScaler
+from .modeling import MLP, make_scheduler
 
 
 def set_global_seed(seed: int):
@@ -27,7 +29,7 @@ def hp_filename(config) -> str:
     def fmt(x):
         return str(x).replace(".", "p").replace(",", "_")
     return (
-        f"lr{fmt(config.lr)}_hid{config.hidden}_layers{config.layers}_ep{config.epochs}.txt"
+        f"lr{fmt(config['lr'])}_hid{config['hidden']}_layers{config['layers']}_ep{config['epochs']}.txt"
     )
 
 
@@ -137,6 +139,7 @@ def train_with_selection_return_model_and_scalers(
     config,
     device: str,
     seed: int,
+    fold_idx: Optional[int] = None,
 ) -> Tuple[nn.Module, IdentityScaler, Optional[StandardScaler], float]:
     set_global_seed(seed)
 
@@ -144,7 +147,7 @@ def train_with_selection_return_model_and_scalers(
     X_tr_s = x_scaler.transform(X_tr)
     X_va_s = x_scaler.transform(X_va)
 
-    if config.task == "regression":
+    if config["task"] == "regression":
         y_tv = np.concatenate([y_tr, y_va]).reshape(-1, 1)
         y_scaler = StandardScaler().fit(y_tv)
         y_tr_s = y_scaler.transform(y_tr.reshape(-1, 1)).ravel()
@@ -160,15 +163,22 @@ def train_with_selection_return_model_and_scalers(
     y_va_t = torch.tensor(y_va_s, dtype=torch.float32, device=device)
 
     train_loader = DataLoader(
-        TensorDataset(X_tr_t, y_tr_t), batch_size=config.batch_size, shuffle=True, pin_memory=False
+        TensorDataset(X_tr_t, y_tr_t), batch_size=config["batch_size"], shuffle=True, pin_memory=False
     )
-    val_loader = DataLoader(TensorDataset(X_va_t, y_va_t), batch_size=config.batch_size, shuffle=False, pin_memory=False)
+    val_loader = DataLoader(
+        TensorDataset(X_va_t, y_va_t), batch_size=config["batch_size"], shuffle=False, pin_memory=False
+    )
 
-    model = MLP(input_dim=X_tr_t.shape[1], hidden=config.hidden, layers=config.layers, dropout=config.dropout).to(device)
-    optimizer = torch.optim.Adam(model.parameters(), lr=config.lr, weight_decay=config.weight_decay)
-    scheduler = make_scheduler(optimizer, total_epochs=config.epochs, warmup=config.warm_up)
+    model = MLP(
+        input_dim=X_tr_t.shape[1],
+        hidden=config["hidden"],
+        layers=config["layers"],
+        dropout=config["dropout"],
+    ).to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=config["lr"], weight_decay=config["weight_decay"])
+    scheduler = make_scheduler(optimizer, total_epochs=config["epochs"], warmup=config["warm_up"])
 
-    if config.task == "classification" and config.metric not in ("auroc", "aurpc"):
+    if config["task"] == "classification" and config["metric"] not in ("auroc", "aurpc"):
         print("[Info] classification: using BCE(val loss) for selection. Set --metric auroc to select by AUROC.")
 
 
@@ -178,11 +188,16 @@ def train_with_selection_return_model_and_scalers(
     no_improve = 0
 
 
-    for epoch in range(1, config.epochs + 1):
-        train_one_epoch(model, train_loader, optimizer, config.task)
+    fold_display = fold_idx + 1 if fold_idx is not None else None
+    epoch_desc = f"Seed {seed}" + (f" | Fold {fold_display}" if fold_display is not None else "") + " | Epochs"
+
+    for epoch in tqdm(range(1, config["epochs"] + 1), desc=epoch_desc, unit="epoch"):
+        train_one_epoch(model, train_loader, optimizer, config["task"])
         scheduler.step()
 
-        cur_score, hib = evaluate_val_metric(model=model, loader=val_loader, task=config.task, metric=config.metric, y_scaler=y_scaler)
+        cur_score, hib = evaluate_val_metric(
+            model=model, loader=val_loader, task=config["task"], metric=config["metric"], y_scaler=y_scaler
+        )
         if higher_is_better is None:
             higher_is_better = hib
 
@@ -193,7 +208,7 @@ def train_with_selection_return_model_and_scalers(
             no_improve = 0
         else:
             no_improve += 1
-            if no_improve >= config.patience:
+            if no_improve >= config["patience"]:
                 break
 
     if best_state is not None:
@@ -214,15 +229,15 @@ def evaluate_multi_runs_on_test(
     for (model, x_scaler, y_scaler) in multi_runs:
         X_te_s = x_scaler.transform(X_test)
         X_te_t = torch.tensor(X_te_s, dtype=torch.float32, device=device)
-        pred = predict_with_model(model, X_te_t, config.task)
+        pred = predict_with_model(model, X_te_t, config["task"])
 
-        if config.task == "classification":
+        if config["task"] == "classification":
             preds.append(pred)
         else:
             pred_orig = y_scaler.inverse_transform(pred.reshape(-1, 1)).ravel() if y_scaler is not None else pred
             preds.append(pred_orig)
 
-    if config.task == "classification":
+    if config["task"] == "classification":
         eps = 1e-7
         preds = np.stack(preds, axis=1)
         preds = np.clip(preds, eps, 1 - eps)
@@ -236,7 +251,7 @@ def evaluate_multi_runs_on_test(
         return {"auroc": float(auroc), "aurpc": float(aurpc)}
 
     avg_pred = np.mean(np.stack(preds, axis=1), axis=1)
-    if config.log_y:
+    if config["log_y"]:
         y_test = np.exp(y_test)
         avg_pred = np.exp(avg_pred)
 
@@ -254,14 +269,14 @@ def build_result_blob(
     best_vals_mean_last_seed: float,
 ) -> Dict:
     return {
-        "dataset": config.dataset_name,
-        "task": config.task,
-        "metric": config.metric,
+        "dataset": config["dataset_name"],
+        "task": config["task"],
+        "metric": config["metric"],
         "hyperparameters": {
-            "lr": config.lr,
-            "hidden": config.hidden,
-            "layers": config.layers,
-            "epochs": config.epochs,
+            "lr": config["lr"],
+            "hidden": config["hidden"],
+            "layers": config["layers"],
+            "epochs": config["epochs"],
         },
         "test_summary_each_seed": all_test_summaries,
         "test_summary_mean_std": metrics_mean_std,
