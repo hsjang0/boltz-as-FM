@@ -1,5 +1,17 @@
 # Boltz is a Strong Baseline for Atom-Level Representation Learning
 
+<div align="center">
+  <a href="https://hsjang0.github.io/hsjang/" target="_blank">Hyosoon&nbsp;Jang</a> &emsp; <b>&middot;</b> &emsp;
+  Hyunjin&nbsp;Seo</a> &emsp; <b>&middot;</b> &emsp;
+  Yunhui&nbsp;Jang</a> &emsp; <b>&middot;</b> &emsp;
+  Seonghyun&nbsp;Park</a> &emsp; <b>&middot;</b> &emsp;
+  Sungsoo&nbsp;Ahn</a>
+  <br> <br>
+  <a href="https://hsjang0.github.io/hsjang/assets/publications/Boltz_as_FM.pdf" target="_blank">Link&nbsp;to&nbsp;paper</a>
+  <br> <br>
+</div>
+
+
 ![Overview of the Boltz workflow](_assets/overview.png)
 
 
@@ -14,7 +26,11 @@ The code is currently being organized.
 - `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations.
 - `MOLOPT/`: Structure-guided ligand discovery (in-progress).
 
-## Boltz2 modifications 
+## Environment
+
+We provide an Apptainer image in `./boltz_as_FM.sif` and a Conda environment in `_env/.`
+
+## Boltz2 Modification 
 
 We use a modified version of the Boltz2 codebase released under the MIT License  
 (https://github.com/jwohlwend/boltz). Modified version of Boltz2 is located in `_env/boltz_for_ADMET`.
