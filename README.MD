@@ -28,7 +28,7 @@
 
 ## Environment
 
-We provide an Apptainer image in `https://huggingface.co/datasets/hsjang1205/Boltz_as_FM_resource/blob/main/Boltz_as_FM.sif` and a Conda environment in `_env/.`
+We provide an Apptainer image in [huggingface](https://huggingface.co/datasets/hsjang1205/Boltz_as_FM_resource/blob/main/Boltz_as_FM.sif) and a Conda environment in `_env/.`
 
 ## Boltz2 Modification 
 
