@@ -8,7 +8,7 @@ if [ -z "$dir_name" ]; then
 fi
 
 
-for dir in "${dir_name}"/*_yaml_files/; do
+for dir in "${dir_name}"/mol_boltz_configs_*/; do
     if [ -d "$dir" ]; then
         echo "Processing directory: $dir"
         boltz predict "$dir" \
