@@ -23,7 +23,7 @@
 *The code is currently being organized.*
 
 - `ADMET/`: TDC ADMET property prediction with lightweight MLP heads on Boltz2 representations.
-- `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations **(in-progress)**.
+- `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations.
 - `MOLOPT/`: Structure-guided ligand discovery **(in-progress)**.
 
 ## Environment

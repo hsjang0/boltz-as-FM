@@ -17,7 +17,7 @@ for dir in "${dir_name}"/*_yaml_files/; do
             --devices "$device_count" \
             --num_workers 8 \
             --out_dir "$dir_name" \
-            --override &
+            --override
     else
         echo "Warning: $dir does not exist."
     fi
