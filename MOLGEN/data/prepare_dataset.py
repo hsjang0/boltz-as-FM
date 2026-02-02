@@ -72,7 +72,7 @@ def main():
 
         for smi in chunk:
             clean_smiles = sanitize_smiles(smi)
-            """
+            
             yaml_content = {
                 "version": 1,
                 "sequences": [
@@ -87,7 +87,7 @@ def main():
             yaml_path = yaml_dir / f"mol_{global_idx}.yaml"
             with open(yaml_path, "w") as f:
                 yaml.dump(yaml_content, f, sort_keys=False)
-            """
+            
             embedding_path = (
                 output_dir
                 / f"boltz_results_{args.yaml_prefix}_{dir_idx}"

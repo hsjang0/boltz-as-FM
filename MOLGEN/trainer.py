@@ -96,7 +96,7 @@ class Trainer(object):
             mean_repa_adj = np.mean(train_repa_adj)
 
             # -------- Log losses --------
-            logger.log(f'{epoch+1:03d} | {time.time()-t_start:.2f}s | '
+            logger.log(f'{epoch+1:03d} | '
                         f'train x: {mean_train_x:.3e} | train adj: {mean_train_adj:.3e} | '
                         f'repa x: {mean_repa_x:.3e} | repa adj: {mean_repa_adj:.3e} | '
                         f'grad_norm: {grad_norm:.2e} |', verbose=False)

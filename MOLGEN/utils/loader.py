@@ -4,7 +4,7 @@ import numpy as np
 import math
 from easydict import EasyDict as edict
 
-from models.transformer import GraphTransformer, GraphTransformer_Mol
+from models.transformer import GraphTransformer_Mol
 from mix import DiffusionMixture
 from losses import get_pred_loss_fn
 from solver import get_pc_sampler

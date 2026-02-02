@@ -57,7 +57,6 @@ class GraphTransformer_Mol(nn.Module):
 
 
         self.depth = repa_depth
-        self.repa_layer = repa_layer
         self.repa_E = nn.Sequential(nn.Linear(hidden_dims['de'], repa_hidden), act_fn_out,
                                     nn.Linear(repa_hidden, repa_adj_dim))
         self.repa_X = nn.Sequential(nn.Linear(hidden_dims['dx'], repa_hidden), act_fn_out,

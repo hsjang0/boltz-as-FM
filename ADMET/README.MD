@@ -3,7 +3,7 @@
 ![Overview of the Boltz workflow](../_assets/admet_performance.png)
 
 
-This is the code to reproduce the TDC ADMET property prediction experiments. This trains lightweight MLP heads on Boltz representations for each dataset across five seeds.
+This repository contains code to reproduce the TDC ADMET property prediction experiments. We train lightweight MLP heads on precomputed Boltz representations for each dataset, using five different random seeds.
 
 
 ## Running an experiment
@@ -20,6 +20,5 @@ Results are stored under `results/<dataset_name>/`.
 
 ## Data
 - We store datasets under `datasets/boltz_rep/<dataset_name>_{train,test}.npz`.
-- The details of dataset construction are described in `construct_dataset/README.md`.
 - Pre-extracted representations are stored as `.npz` like `Ames_train.npz` and `Ames_test.npz`, each containing `x` (features) and `y` (labels).
-- To rebuild representations, run the scripts in `construct_dataset/`.
+- To rebuild representation datasets, follow `construct_dataset/README.md`.

@@ -1,6 +1,6 @@
 data:
   data: ZINC250k
-  dir: '/data'
+  dir: 'data'
   batch_size: 512
   max_node_num: 38
   max_feat_num: 9

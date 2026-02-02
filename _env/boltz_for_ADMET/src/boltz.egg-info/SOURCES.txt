@@ -1,5 +1,4 @@
 LICENSE
-README.md
 pyproject.toml
 src/boltz/__init__.py
 src/boltz/main.py

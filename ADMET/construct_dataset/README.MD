@@ -9,5 +9,5 @@ Our code includes a modified version of Boltz2 located in `../../_env/boltz_for_
 
 ## Steps
 1. Create embeddings config for Boltz: `python construct_boltz_yaml.py --save_dir <directory_name>` (`<directory_name>` is where embeddings will be written).
-2. Produce Boltz embeddings: `./get_emb.sh <directory_name>`.
+2. Produce Boltz embeddings: `./get_emb.sh <directory_name> <num_gpus>`.
 3. Pool embeddings into the dataset: `python pooling_dataset.py --output_dir ../datasets/boltz_rep --emb_dir <directory_name>`.

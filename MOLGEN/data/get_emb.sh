@@ -1,22 +1,21 @@
 #!/bin/bash
-
 dir_name="$1"
+device_count="${2:-8}"
 
 if [ -z "$dir_name" ]; then
-    echo "Usage: $0 <dir_name>"
+    echo "Usage: $0 <dir_name> [device_count]"
     exit 1
 fi
 
-
 for dir in "${dir_name}"/mol_boltz_configs_*/; do
     if [ -d "$dir" ]; then
-        echo "Processing directory: $dir"
+        echo "Processing directory: $dir (devices: $device_count)"
         boltz predict "$dir" \
             --write_embeddings \
-            --devices 8 \
+            --devices "$device_count" \
             --num_workers 8 \
             --out_dir "$dir_name" \
-            --override &
+            --override
     else
         echo "Warning: $dir does not exist."
     fi
