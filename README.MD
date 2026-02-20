@@ -20,7 +20,7 @@
 
 ## Repository Layout
 
-*The code is currently being organized.*
+*The code is currently being refactorized.*
 
 - `ADMET/`: TDC ADMET property prediction with lightweight MLP heads on Boltz2 representations.
 - `MOLGEN/`: Molecular generation on ZINC250k leveraging Boltz2 representations.
