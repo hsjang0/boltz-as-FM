@@ -2,10 +2,10 @@
 
 <div align="center">
   <a href="https://hsjang0.github.io/hsjang/" target="_blank">Hyosoon&nbsp;Jang</a> &emsp; <b>&middot;</b> &emsp;
-  Hyunjin&nbsp;Seo</a> &emsp; <b>&middot;</b> &emsp;
-  Yunhui&nbsp;Jang</a> &emsp; <b>&middot;</b> &emsp;
-  Seonghyun&nbsp;Park</a> &emsp; <b>&middot;</b> &emsp;
-  Sungsoo&nbsp;Ahn</a>
+  <a href="https://hyunjin72.github.io/" target="_blank">Hyunjin&nbsp;Seo</a> &emsp; <b>&middot;</b> &emsp;
+  <a href="https://yunhuijang.github.io/" target="_blank">Yunhui&nbsp;Jang</a> &emsp; <b>&middot;</b> &emsp;
+  <a href="https://seonghyun26.github.io/hyun/" target="_blank">Seonghyun&nbsp;Park</a> &emsp; <b>&middot;</b> &emsp;
+  <a href="https://sungsoo-ahn.github.io/" target="_blank">Sungsoo&nbsp;Ahn</a>
   <br> <br>
   <a href="https://hsjang0.github.io/hsjang/assets/publications/Boltz_as_FM.pdf" target="_blank">Link&nbsp;to&nbsp;paper</a>
   <br> <br>
